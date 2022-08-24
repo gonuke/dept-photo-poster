@@ -1,0 +1,23 @@
+name: build-photo-poster
+
+on:
+  push:
+     paths:
+        - "photos/*.jpeg"
+
+jobs:
+   build-poster:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Set up Git repository
+          uses: actions/checkout@v2
+        - name: Build LaTeX document
+        - run: python poster.py  
+        - name: Compile LaTeX document
+          uses: xu-cheng/latex-action@v2
+          with:
+            root_file: poster.tex
+        - uses: actions/upload-artifact@v2
+          with:
+            name: poster
+            path: poster.pdf
