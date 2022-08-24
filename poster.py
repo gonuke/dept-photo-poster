@@ -27,6 +27,7 @@ document_footer = """
 \\end{document}"""
 
 photo_file_list = glob.glob("photos/*.jpeg")
+photo_file_list.sort()
 
 student_data = []
 for filename in photo_file_list:
