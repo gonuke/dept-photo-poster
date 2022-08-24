@@ -1,6 +1,7 @@
 name: build-photo-poster
 
 on:
+  workflow_dispatch:
   push:
      paths:
         - "photos/*.jpeg"
