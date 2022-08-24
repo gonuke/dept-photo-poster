@@ -86,8 +86,7 @@ def build_missing_list():
 photo_table_contents = build_photo_table(photos_per_row, photo_width, column_padding)
 missing_list_contents = build_missing_list()
 
-
-print(document_tmpl.substitute(paper_width = paper_width,
+document = document_tmpl.substitute(paper_width = paper_width,
     paper_height = paper_height,
     text_width = text_width,
     text_height = text_height,
@@ -100,11 +99,8 @@ print(document_tmpl.substitute(paper_width = paper_width,
     missing_font_lineheight = missing_font_lineheight,
     photo_table_column_format = photo_table_column_format,
     photo_table_contents = photo_table_contents,
-    missing_list_contents = missing_list_contents))
+    missing_list_contents = missing_list_contents) 
 
-# with open("poster.tex", "w") as poster_file:
-#     poster_file.write(document_tmpl.substitute(paper_width = paper_width,
-#     paper_height = paper_height,
-#     text_width=text_width,
-#     text_height=text_height)
 
+with open("poster.tex", "w") as poster_file:
+    poster_file.write(document)
