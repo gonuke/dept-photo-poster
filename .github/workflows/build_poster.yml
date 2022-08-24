@@ -12,7 +12,7 @@ jobs:
         - name: Set up Git repository
           uses: actions/checkout@v2
         - name: Build LaTeX document
-        - run: python poster.py  
+          run: python poster.py  
         - name: Compile LaTeX document
           uses: xu-cheng/latex-action@v2
           with:
