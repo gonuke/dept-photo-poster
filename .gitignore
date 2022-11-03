@@ -1,0 +1,12 @@
+photos/*
+
+# TeX
+*.fls
+*.fdb_latexmk
+*.aux
+*.log
+*.csv
+
+# Products
+poster.pdf
+poster.tex 
