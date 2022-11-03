@@ -45,7 +45,9 @@ document_tmpl = Template("""\\documentclass[12pt]{article}
 
 def build_photo_table(photos_per_row, photo_width, column_padding):
 
-    photo_file_list = glob.glob("photos/*.jpeg")
+    photo_file_list = []
+    for fmt in ["jpg", "jpeg", "png"]:
+        photo_file_list.extend(glob.glob("photos/*." + fmt))
     photo_file_list.sort()
 
     num_photos = len(photo_file_list)
