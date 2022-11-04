@@ -3,10 +3,11 @@
 import glob
 from string import Template
 
-photos_per_row = 13
-photo_table_column_format = 'c' * (2 * photos_per_row - 1)
-photo_width = "4in"
-column_padding = "1cm"
+photos_per_row = 18
+photo_table_column_format = 'C' * photos_per_row # (2 * photos_per_row - 1)
+column_padding = "0.01cm"
+column_width="3.3in"
+photo_width = column_width
 
 paper_width = "72in"
 paper_height = "48in"
@@ -15,16 +16,18 @@ text_height = "46in"
 logo_width = "12in"
 title_font_size = "2.5in"
 title_font_lineheight = "2.7in"
-name_font_size = "1cm"
-name_font_lineheight = "1.2cm"
-missing_font_size = "1.5cm"
-missing_font_lineheight = "1.7cm"
+name_font_size = "0.8cm"
+name_font_lineheight = "1cm"
+missing_font_size = "1cm"
+missing_font_lineheight = "1.2cm"
 
 document_tmpl = Template("""\\documentclass[12pt]{article}
 
 \\usepackage[papersize={$paper_width,$paper_height}, width=$text_width, height=$text_height]{geometry}
 \\usepackage{graphicx}
 \\usepackage{txfonts}
+\\usepackage{array}
+\\newcolumntype{C}{>{\centering\\arraybackslash}p{$column_width}}
 
 \\begin{document}
 \\begin{center}
@@ -62,7 +65,8 @@ def build_photo_table(photos_per_row, photo_width, column_padding):
             filename = photo_file_list[idx]
             photo_row.append("        \\includegraphics[width=" + photo_width + "]{" + filename + "}" )
             label_row.append("        " + make_name(filename))
-        rows.extend(['&\\hspace*{1.5cm}&\n'.join(photo_row), ('&\\hspace*{' + column_padding + '}&\n').join(label_row)])
+        #rows.extend([('&\\hspace*{' + column_padding + '}&\n').join(photo_row), ('&\\hspace*{' + column_padding + '}&\n').join(label_row)])
+        rows.extend([('&\n').join(photo_row), ('&\n').join(label_row)])
     photo_table_contents += "\\\\\n".join(rows)
 
     return photo_table_contents
@@ -70,7 +74,14 @@ def build_photo_table(photos_per_row, photo_width, column_padding):
 def make_name(filename):
 
     name_parts = filename.split('.')[0].split('/')[1].split('_')
-    return ' '.join([name_parts[1], name_parts[0], "("+name_parts[2]+")"])
+    name = ""
+
+    try:
+        name = ' '.join([name_parts[1], name_parts[0], "("+name_parts[2]+")"])
+    except:
+        print(name_parts)
+
+    return name
 
 def build_missing_list():
 
@@ -92,6 +103,7 @@ document = document_tmpl.substitute(paper_width = paper_width,
     paper_height = paper_height,
     text_width = text_width,
     text_height = text_height,
+    column_width = column_width,
     title_font_size = title_font_size,
     title_font_lineheight = title_font_lineheight,
     logo_width = logo_width,
